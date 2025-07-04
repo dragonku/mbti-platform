@@ -39,7 +39,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return {
           id: Date.now().toString(),
           email: credentials.email as string,
-          name: credentials.email?.split('@')[0] || "새 사용자",
+          name: (credentials.email as string)?.split('@')[0] || "새 사용자",
           image: null,
         }
       }
@@ -47,7 +47,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   pages: {
     signIn: '/auth/signin',
-    signUp: '/auth/signup',
   },
   callbacks: {
     async session({ session, token }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn, getSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -30,7 +30,7 @@ export default function SignInPage() {
         router.push("/");
         router.refresh();
       }
-    } catch (error) {
+    } catch {
       setError("로그인 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
@@ -41,7 +41,7 @@ export default function SignInPage() {
     setLoading(true);
     try {
       await signIn(provider, { callbackUrl: "/" });
-    } catch (error) {
+    } catch {
       setError(`${provider} 로그인 중 오류가 발생했습니다.`);
       setLoading(false);
     }

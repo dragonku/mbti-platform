@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Navigation() {
@@ -66,9 +67,11 @@ export default function Navigation() {
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
                   {session.user?.image ? (
-                    <img
+                    <Image
                       src={session.user.image}
                       alt="Profile"
+                      width={32}
+                      height={32}
                       className="h-8 w-8 rounded-full"
                     />
                   ) : (

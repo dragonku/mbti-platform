@@ -49,7 +49,7 @@ export default function SignUpPage() {
           router.push("/");
         }, 2000);
       }
-    } catch (error) {
+    } catch {
       setError("회원가입 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
@@ -60,7 +60,7 @@ export default function SignUpPage() {
     setLoading(true);
     try {
       await signIn(provider, { callbackUrl: "/" });
-    } catch (error) {
+    } catch {
       setError(`${provider} 회원가입 중 오류가 발생했습니다.`);
       setLoading(false);
     }
