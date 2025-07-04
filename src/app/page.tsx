@@ -17,7 +17,7 @@ export default function Home() {
             종합 MBTI 서비스입니다.
           </p>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-700 p-6 hover:shadow-xl dark:hover:shadow-gray-600 transition-shadow">
               <div className="text-3xl mb-4">🎮</div>
               <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">게임화된 테스트</h3>
@@ -30,11 +30,21 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-400">친구, 연인, 가족과의 관계를 더 깊이 이해하세요</p>
             </div>
             
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-700 p-6 hover:shadow-xl dark:hover:shadow-gray-600 transition-shadow">
-              <div className="text-3xl mb-4">👥</div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">커뮤니티</h3>
-              <p className="text-gray-600 dark:text-gray-400">같은 MBTI 타입의 사람들과 소통하고 교류하세요</p>
-            </div>
+            <Link href="/community" className="block">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-700 p-6 hover:shadow-xl dark:hover:shadow-gray-600 transition-shadow">
+                <div className="text-3xl mb-4">👥</div>
+                <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">커뮤니티</h3>
+                <p className="text-gray-600 dark:text-gray-400">같은 MBTI 타입의 사람들과 소통하고 교류하세요</p>
+              </div>
+            </Link>
+            
+            <Link href="/recommendations" className="block">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-700 p-6 hover:shadow-xl dark:hover:shadow-gray-600 transition-shadow">
+                <div className="text-3xl mb-4">🎯</div>
+                <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">개인화 추천</h3>
+                <p className="text-gray-600 dark:text-gray-400">당신의 MBTI에 맞는 직업, 취미, 도서를 추천받으세요</p>
+              </div>
+            </Link>
           </div>
           
           <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">

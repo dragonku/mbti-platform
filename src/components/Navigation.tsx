@@ -48,6 +48,22 @@ export default function Navigation() {
               >
                 소개
               </Link>
+              <Link
+                href="/community"
+                className={`text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${
+                  pathname?.startsWith('/community') ? 'text-blue-600 dark:text-blue-400 font-medium' : ''
+                }`}
+              >
+                커뮤니티
+              </Link>
+              <Link
+                href="/recommendations"
+                className={`text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${
+                  pathname?.startsWith('/recommendations') ? 'text-blue-600 dark:text-blue-400 font-medium' : ''
+                }`}
+              >
+                추천
+              </Link>
               {session && (
                 <Link
                   href="/profile"
