@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Question {
   id: number;
@@ -83,6 +84,7 @@ export default function TestPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
+  const router = useRouter();
 
   const handleAnswer = (value: string) => {
     const newAnswers = [...answers, value];
@@ -91,14 +93,39 @@ export default function TestPage() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setShowResult(true);
+      // 테스트 완료 시 결과 계산하고 결과 페이지로 이동
+      const mbti = calculateMBTI(newAnswers);
+      
+      // 결과를 로컬 스토리지에 저장
+      const result = {
+        date: new Date().toLocaleDateString('ko-KR'),
+        result: mbti,
+        description: getMBTIDescription(mbti)
+      };
+      
+      const existingHistory = localStorage.getItem('mbtiHistory');
+      const history = existingHistory ? JSON.parse(existingHistory) : [];
+      history.unshift(result);
+      
+      if (history.length > 10) {
+        history.pop();
+      }
+      
+      localStorage.setItem('mbtiHistory', JSON.stringify(history));
+      
+      // 결과 페이지로 이동
+      const params = new URLSearchParams({
+        mbti: mbti,
+        answers: encodeURIComponent(JSON.stringify(newAnswers))
+      });
+      router.push(`/result?${params.toString()}`);
     }
   };
 
-  const calculateMBTI = () => {
+  const calculateMBTI = (answerList: string[] = answers) => {
     const counts = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
     
-    answers.forEach(answer => {
+    answerList.forEach(answer => {
       counts[answer as keyof typeof counts]++;
     });
 
