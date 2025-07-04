@@ -144,6 +144,31 @@ export default function TestPage() {
     const mbti = calculateMBTI();
     const description = getMBTIDescription(mbti);
 
+    // 결과를 로컬 스토리지에 저장
+    const saveResult = () => {
+      const result = {
+        date: new Date().toLocaleDateString('ko-KR'),
+        result: mbti,
+        description: description
+      };
+      
+      const existingHistory = localStorage.getItem('mbtiHistory');
+      const history = existingHistory ? JSON.parse(existingHistory) : [];
+      history.unshift(result);
+      
+      // 최대 10개까지만 저장
+      if (history.length > 10) {
+        history.pop();
+      }
+      
+      localStorage.setItem('mbtiHistory', JSON.stringify(history));
+    };
+
+    // 결과가 표시될 때 한 번만 저장
+    if (typeof window !== 'undefined') {
+      saveResult();
+    }
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
         <div className="container mx-auto px-4 py-16">
