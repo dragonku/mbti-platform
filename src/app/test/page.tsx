@@ -197,11 +197,11 @@ export default function TestPage() {
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="bg-white rounded-lg shadow-xl p-8">
-              <h1 className="text-4xl font-bold text-gray-800 mb-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl dark:shadow-gray-700 p-8">
+              <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">
                 테스트 완료! 🎉
               </h1>
               
@@ -211,19 +211,19 @@ export default function TestPage() {
               </div>
 
               <div className="space-y-4 mb-8">
-                <h3 className="text-xl font-semibold text-gray-700">당신의 성향</h3>
+                <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300">당신의 성향</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="bg-gray-50 p-3 rounded">
-                    <strong>에너지 방향:</strong> {mbti[0] === 'E' ? '외향형 (E)' : '내향형 (I)'}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                    <strong className="text-gray-900 dark:text-gray-100">에너지 방향:</strong> <span className="text-gray-700 dark:text-gray-300">{mbti[0] === 'E' ? '외향형 (E)' : '내향형 (I)'}</span>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <strong>인식 방식:</strong> {mbti[1] === 'S' ? '감각형 (S)' : '직관형 (N)'}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                    <strong className="text-gray-900 dark:text-gray-100">인식 방식:</strong> <span className="text-gray-700 dark:text-gray-300">{mbti[1] === 'S' ? '감각형 (S)' : '직관형 (N)'}</span>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <strong>판단 방식:</strong> {mbti[2] === 'T' ? '사고형 (T)' : '감정형 (F)'}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                    <strong className="text-gray-900 dark:text-gray-100">판단 방식:</strong> <span className="text-gray-700 dark:text-gray-300">{mbti[2] === 'T' ? '사고형 (T)' : '감정형 (F)'}</span>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <strong>생활 양식:</strong> {mbti[3] === 'J' ? '판단형 (J)' : '인식형 (P)'}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
+                    <strong className="text-gray-900 dark:text-gray-100">생활 양식:</strong> <span className="text-gray-700 dark:text-gray-300">{mbti[3] === 'J' ? '판단형 (J)' : '인식형 (P)'}</span>
                   </div>
                 </div>
               </div>
@@ -250,18 +250,18 @@ export default function TestPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-lg shadow-xl p-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl dark:shadow-gray-700 p-8">
             <div className="mb-6">
               <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold text-gray-800">MBTI 테스트</h1>
-                <span className="text-sm text-gray-500">
+                <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">MBTI 테스트</h1>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
                   {currentQuestion + 1} / {questions.length}
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                 <div 
                   className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
@@ -270,7 +270,7 @@ export default function TestPage() {
             </div>
 
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-gray-700 mb-6">
+              <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-6">
                 {questions[currentQuestion].text}
               </h2>
               
@@ -279,9 +279,14 @@ export default function TestPage() {
                   <button
                     key={index}
                     onClick={() => handleAnswer(option.value)}
-                    className="w-full p-4 text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-colors"
+                    className="w-full p-4 text-left bg-white dark:bg-gray-700 hover:bg-blue-50 dark:hover:bg-gray-600 border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md text-gray-800 dark:text-gray-200 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
                   >
-                    {option.text}
+                    <div className="flex items-center">
+                      <span className="w-6 h-6 rounded-full border-2 border-gray-300 dark:border-gray-500 mr-3 flex items-center justify-center text-sm font-bold text-gray-700 dark:text-gray-300">
+                        {index + 1}
+                      </span>
+                      {option.text}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -290,11 +295,11 @@ export default function TestPage() {
             <div className="flex justify-between">
               <Link
                 href="/"
-                className="text-gray-600 hover:text-gray-800 transition-colors"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
               >
                 ← 홈으로 돌아가기
               </Link>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-500 dark:text-gray-400">
                 질문에 답하여 진행하세요
               </div>
             </div>

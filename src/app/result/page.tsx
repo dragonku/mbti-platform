@@ -133,10 +133,10 @@ function ResultContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">결과를 분석하는 중...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">결과를 분석하는 중...</p>
         </div>
       </div>
     );
@@ -144,9 +144,9 @@ function ResultContent() {
 
   if (!mbti || !answers.length) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">결과를 찾을 수 없습니다</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">결과를 찾을 수 없습니다</h1>
           <Link href="/test" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
             테스트 다시하기
           </Link>
@@ -158,15 +158,15 @@ function ResultContent() {
   const description = getMBTIDescription(mbti);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* 헤더 */}
-          <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl dark:shadow-gray-700 p-8 mb-8">
             <div className="flex items-center justify-between mb-6">
               <Link 
                 href="/test"
-                className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+                className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
                 <ArrowLeft className="w-5 h-5 mr-2" />
                 테스트로 돌아가기
@@ -190,7 +190,7 @@ function ResultContent() {
                 <h2 className="text-2xl font-semibold">{description.title}</h2>
               </div>
 
-              <p className="text-lg text-gray-700 leading-relaxed">
+              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 {description.description}
               </p>
             </div>
@@ -201,8 +201,8 @@ function ResultContent() {
 
           {/* 상세 특징 */}
           <div className="grid md:grid-cols-2 gap-8 mt-8">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-700 p-6">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                 <Heart className="w-6 h-6 mr-2 text-red-500" />
                 주요 특징
               </h3>
@@ -210,20 +210,20 @@ function ResultContent() {
                 {description.traits.map((trait, index) => (
                   <li key={index} className="flex items-start">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                    <span className="text-gray-700">{trait}</span>
+                    <span className="text-gray-700 dark:text-gray-300">{trait}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-700 p-6">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
                 💼 추천 직업
               </h3>
               <div className="grid grid-cols-2 gap-3">
                 {description.careers.map((career, index) => (
-                  <div key={index} className="bg-gray-50 rounded-lg p-3 text-center">
-                    <span className="text-gray-700 font-medium">{career}</span>
+                  <div key={index} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 text-center">
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">{career}</span>
                   </div>
                 ))}
               </div>
@@ -260,10 +260,10 @@ function ResultContent() {
 export default function ResultPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">결과를 불러오는 중...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">결과를 불러오는 중...</p>
         </div>
       </div>
     }>

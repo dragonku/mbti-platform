@@ -88,11 +88,11 @@ export default function CompatibilityPage() {
 
   const getResultColor = (level: string) => {
     switch (level) {
-      case 'excellent': return 'text-green-600 bg-green-50 border-green-200';
-      case 'good': return 'text-blue-600 bg-blue-50 border-blue-200';
-      case 'fair': return 'text-yellow-600 bg-yellow-50 border-yellow-200';
-      case 'challenging': return 'text-red-600 bg-red-50 border-red-200';
-      default: return 'text-gray-600 bg-gray-50 border-gray-200';
+      case 'excellent': return 'text-green-600 bg-green-50 border-green-200 dark:text-green-400 dark:bg-green-900/20 dark:border-green-600';
+      case 'good': return 'text-blue-600 bg-blue-50 border-blue-200 dark:text-blue-400 dark:bg-blue-900/20 dark:border-blue-600';
+      case 'fair': return 'text-yellow-600 bg-yellow-50 border-yellow-200 dark:text-yellow-400 dark:bg-yellow-900/20 dark:border-yellow-600';
+      case 'challenging': return 'text-red-600 bg-red-50 border-red-200 dark:text-red-400 dark:bg-red-900/20 dark:border-red-600';
+      default: return 'text-gray-600 bg-gray-50 border-gray-200 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600';
     }
   };
 
@@ -107,20 +107,20 @@ export default function CompatibilityPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">💝 MBTI 궁합 분석</h1>
-            <p className="text-xl text-gray-600">두 사람의 MBTI를 비교하여 관계의 궁합을 분석해보세요</p>
+            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">💝 MBTI 궁합 분석</h1>
+            <p className="text-xl text-gray-600 dark:text-gray-300">두 사람의 MBTI를 비교하여 관계의 궁합을 분석해보세요</p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-xl p-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8">
             {!showResult ? (
               <div className="space-y-8">
                 {/* 분석 타입 선택 */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-700 mb-4">분석하고 싶은 관계를 선택하세요</h3>
+                  <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-100 mb-4">분석하고 싶은 관계를 선택하세요</h3>
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {analysisTypes.map((type) => {
                       const IconComponent = type.icon;
@@ -130,12 +130,12 @@ export default function CompatibilityPage() {
                           onClick={() => setAnalysisType(type.id)}
                           className={`p-4 rounded-lg border-2 transition-all ${
                             analysisType === type.id
-                              ? 'border-blue-500 bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300'
+                              ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400'
+                              : 'border-gray-200 hover:border-gray-300 dark:border-gray-600 dark:hover:border-gray-500'
                           }`}
                         >
                           <IconComponent className={`w-8 h-8 mx-auto mb-2 ${type.color}`} />
-                          <div className="font-medium text-gray-700">{type.name}</div>
+                          <div className="font-medium text-gray-700 dark:text-gray-100">{type.name}</div>
                         </button>
                       );
                     })}
@@ -145,7 +145,7 @@ export default function CompatibilityPage() {
                 {/* MBTI 선택 */}
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-4">나의 MBTI</h3>
+                    <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-100 mb-4">나의 MBTI</h3>
                     <div className="grid grid-cols-4 gap-2">
                       {mbtiTypes.map((type) => (
                         <button
@@ -153,8 +153,8 @@ export default function CompatibilityPage() {
                           onClick={() => setMyMBTI(type)}
                           className={`p-3 rounded-lg border-2 font-medium transition-all ${
                             myMBTI === type
-                              ? 'border-blue-500 bg-blue-50 text-blue-700'
-                              : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                              ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-400'
+                              : 'border-gray-200 hover:border-gray-300 text-gray-700 dark:border-gray-600 dark:hover:border-gray-500 dark:text-gray-100'
                           }`}
                         >
                           {type}
@@ -164,7 +164,7 @@ export default function CompatibilityPage() {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-4">상대방의 MBTI</h3>
+                    <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-100 mb-4">상대방의 MBTI</h3>
                     <div className="grid grid-cols-4 gap-2">
                       {mbtiTypes.map((type) => (
                         <button
@@ -172,8 +172,8 @@ export default function CompatibilityPage() {
                           onClick={() => setPartnerMBTI(type)}
                           className={`p-3 rounded-lg border-2 font-medium transition-all ${
                             partnerMBTI === type
-                              ? 'border-purple-500 bg-purple-50 text-purple-700'
-                              : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                              ? 'border-purple-500 bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 dark:border-purple-400'
+                              : 'border-gray-200 hover:border-gray-300 text-gray-700 dark:border-gray-600 dark:hover:border-gray-500 dark:text-gray-100'
                           }`}
                         >
                           {type}
@@ -200,15 +200,15 @@ export default function CompatibilityPage() {
                 {/* 결과 헤더 */}
                 <div className="text-center">
                   <div className="flex justify-center items-center space-x-4 mb-6">
-                    <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg font-bold text-xl">
+                    <div className="bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 px-4 py-2 rounded-lg font-bold text-xl">
                       {myMBTI}
                     </div>
                     <Heart className="w-8 h-8 text-red-500" />
-                    <div className="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg font-bold text-xl">
+                    <div className="bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 px-4 py-2 rounded-lg font-bold text-xl">
                       {partnerMBTI}
                     </div>
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                  <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
                     {analysisTypes.find(t => t.id === analysisType)?.name} 궁합 분석 결과
                   </h2>
                 </div>
@@ -220,22 +220,22 @@ export default function CompatibilityPage() {
                 </div>
 
                 {/* 분석 이유 */}
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">왜 이런 결과가 나왔을까요?</h3>
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">왜 이런 결과가 나왔을까요?</h3>
                   <ul className="space-y-3">
                     {result!.reasons.map((reason, index) => (
                       <li key={index} className="flex items-start">
                         <Star className="w-5 h-5 text-yellow-500 mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{reason}</span>
+                        <span className="text-gray-700 dark:text-gray-300">{reason}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* 관계 개선 팁 */}
-                <div className="bg-blue-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">💡 관계 개선 팁</h3>
-                  <div className="space-y-2 text-gray-700">
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">💡 관계 개선 팁</h3>
+                  <div className="space-y-2 text-gray-700 dark:text-gray-300">
                     {analysisType === 'romantic' && (
                       <>
                         <p>• 서로의 차이점을 인정하고 존중하세요</p>
@@ -271,19 +271,19 @@ export default function CompatibilityPage() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
                     onClick={() => setShowResult(false)}
-                    className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                    className="bg-gray-600 dark:bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
                   >
                     다시 분석하기
                   </button>
                   <Link
                     href="/test"
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors text-center"
+                    className="bg-blue-600 dark:bg-blue-700 text-white px-6 py-3 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-center"
                   >
                     MBTI 테스트하기
                   </Link>
                   <Link
                     href="/profile"
-                    className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors text-center"
+                    className="bg-purple-600 dark:bg-purple-700 text-white px-6 py-3 rounded-lg hover:bg-purple-700 dark:hover:bg-purple-600 transition-colors text-center"
                   >
                     내 프로필 보기
                   </Link>
