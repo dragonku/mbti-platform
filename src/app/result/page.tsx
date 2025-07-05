@@ -3,22 +3,27 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import MBTIChart from "@/components/MBTIChart";
 import { ArrowLeft, Share2, Download, Heart } from "lucide-react";
 
 function ResultContent() {
   const searchParams = useSearchParams();
   const [mbti, setMbti] = useState("");
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [scores, setScores] = useState<{ [key: string]: number }>({});
+  const [percentages, setPercentages] = useState<{ [key: string]: number }>({});
+  const [timeSpent, setTimeSpent] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const mbtiParam = searchParams.get('mbti');
-    const answersParam = searchParams.get('answers');
+    const scoresParam = searchParams.get('scores');
+    const percentagesParam = searchParams.get('percentages');
+    const timeSpentParam = searchParams.get('timeSpent');
     
-    if (mbtiParam && answersParam) {
+    if (mbtiParam && scoresParam && percentagesParam) {
       setMbti(mbtiParam);
-      setAnswers(JSON.parse(decodeURIComponent(answersParam)));
+      setScores(JSON.parse(scoresParam));
+      setPercentages(JSON.parse(percentagesParam));
+      setTimeSpent(timeSpentParam ? parseInt(timeSpentParam) : 0);
     }
     setLoading(false);
   }, [searchParams]);
@@ -142,7 +147,13 @@ function ResultContent() {
     );
   }
 
-  if (!mbti || !answers.length) {
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}분 ${remainingSeconds}초`;
+  };
+
+  if (!mbti || Object.keys(scores).length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
@@ -187,7 +198,10 @@ function ResultContent() {
               <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-8 mb-6">
                 <h1 className="text-4xl font-bold mb-4">🎉 테스트 완료!</h1>
                 <div className="text-6xl font-bold mb-4">{mbti}</div>
-                <h2 className="text-2xl font-semibold">{description.title}</h2>
+                <h2 className="text-2xl font-semibold mb-2">{description.title}</h2>
+                <div className="text-sm opacity-80">
+                  완료 시간: {formatTime(timeSpent)} | 총 40문항
+                </div>
               </div>
 
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -197,7 +211,112 @@ function ResultContent() {
           </div>
 
           {/* 시각적 차트 */}
-          <MBTIChart mbti={mbti} answers={answers} />
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-700 p-8 mb-8">
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6 text-center">
+              📊 당신의 성향 분석
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* E/I 차원 */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-700 dark:text-gray-300">에너지 방향</h4>
+                <div className="relative">
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    <span>내향형 (I)</span>
+                    <span>외향형 (E)</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
+                    <div 
+                      className="bg-gradient-to-r from-purple-500 to-blue-500 h-6 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ width: `${percentages.E || 0}%` }}
+                    >
+                      {mbti[0] === 'E' ? `${percentages.E}% E` : `${percentages.I}% I`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* S/N 차원 */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-700 dark:text-gray-300">인식 방식</h4>
+                <div className="relative">
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    <span>감각형 (S)</span>
+                    <span>직관형 (N)</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
+                    <div 
+                      className="bg-gradient-to-r from-green-500 to-emerald-500 h-6 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ width: `${Math.max(percentages.S || 0, percentages.N || 0)}%` }}
+                    >
+                      {mbti[1] === 'S' ? `${percentages.S}% S` : `${percentages.N}% N`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* T/F 차원 */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-700 dark:text-gray-300">판단 방식</h4>
+                <div className="relative">
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    <span>사고형 (T)</span>
+                    <span>감정형 (F)</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
+                    <div 
+                      className="bg-gradient-to-r from-orange-500 to-red-500 h-6 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ width: `${Math.max(percentages.T || 0, percentages.F || 0)}%` }}
+                    >
+                      {mbti[2] === 'T' ? `${percentages.T}% T` : `${percentages.F}% F`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* J/P 차원 */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-700 dark:text-gray-300">생활 양식</h4>
+                <div className="relative">
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    <span>판단형 (J)</span>
+                    <span>인식형 (P)</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
+                    <div 
+                      className="bg-gradient-to-r from-indigo-500 to-purple-500 h-6 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                      style={{ width: `${Math.max(percentages.J || 0, percentages.P || 0)}%` }}
+                    >
+                      {mbti[3] === 'J' ? `${percentages.J}% J` : `${percentages.P}% P`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 상세 점수 */}
+            <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <h4 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">상세 점수</h4>
+              <div className="grid grid-cols-4 gap-4 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{mbti[0]}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{percentages[mbti[0] as keyof typeof percentages]}%</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">{mbti[1]}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{percentages[mbti[1] as keyof typeof percentages]}%</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{mbti[2]}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{percentages[mbti[2] as keyof typeof percentages]}%</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{mbti[3]}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{percentages[mbti[3] as keyof typeof percentages]}%</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* 상세 특징 */}
           <div className="grid md:grid-cols-2 gap-8 mt-8">
