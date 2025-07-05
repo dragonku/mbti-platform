@@ -1,0 +1,33 @@
+name: Build Mobile App
+
+on:
+  push:
+    branches: [main, mobile-app]
+  pull_request:
+    branches: [main, mobile-app]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Setup Expo CLI
+      run: npm install -g @expo/cli
+
+    - name: Build for web
+      run: npx expo export --platform web
+
+    - name: Build status
+      run: echo "✅ Mobile app build completed successfully!"
